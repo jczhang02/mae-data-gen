@@ -1,1 +1,3 @@
-"""Traditional numerical solvers for Monge-Ampère equations."""
+"""Traditional numerical solvers for Monge-Ampere equations."""
+
+__all__: list[str] = []

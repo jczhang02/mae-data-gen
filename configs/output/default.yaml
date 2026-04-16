@@ -1,0 +1,2 @@
+dir: data/${problem.name}
+format: npz

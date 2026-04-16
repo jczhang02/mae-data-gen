@@ -1,0 +1,4 @@
+defaults:
+  - problem: identity_transport
+  - sampling: default
+  - output: default

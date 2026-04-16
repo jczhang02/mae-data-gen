@@ -1,0 +1,8 @@
+n_interior: 2000
+n_boundary: 500
+resolution: null
+splits:
+  - train
+  - val
+  - test
+seed: 42

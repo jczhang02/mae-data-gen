@@ -1,0 +1,6 @@
+name: identity_transport
+dim: 2
+domain:
+  type: disk
+  radius: 1.0
+  center: [0.0, 0.0]
