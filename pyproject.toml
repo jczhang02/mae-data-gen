@@ -2,7 +2,7 @@
 name = "mae-data-gen"
 version = "0.1.0"
 description = "Traditional numerical solvers for generating Monge-Ampere equation reference data"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.14"  # Hydra 1.3.2 incompatible with Python 3.14 (argparse LazyCompletionHelp)
 dependencies = [
     "numpy>=1.26",
     "scipy>=1.12",
