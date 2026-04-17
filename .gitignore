@@ -8,6 +8,8 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+data/
+outputs/
 
 # Claude / AI agents
 .claude/
