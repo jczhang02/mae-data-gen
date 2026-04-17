@@ -1,17 +1,19 @@
 """Sampling and grid utilities for disk domains."""
 
 import numpy as np
-from numpy.typing import NDArray
+from beartype import beartype
+from jaxtyping import Float, jaxtyped
 
 __all__ = ["grid_disk", "sample_disk", "sample_disk_boundary"]
 
 
+@jaxtyped(typechecker=beartype)
 def sample_disk(
     n_points: int,
     radius: float = 1.0,
     rng: np.random.Generator | None = None,
     seed: int | None = None,
-) -> NDArray:
+) -> Float[np.ndarray, "{n_points} 2"]:
     """Sample uniform random points inside a disk.
 
     Uses the rejection-free square-root method for uniform distribution.
@@ -36,7 +38,11 @@ def sample_disk(
     return np.column_stack([x1, x2])
 
 
-def sample_disk_boundary(n_points: int, radius: float = 1.0) -> NDArray:
+@jaxtyped(typechecker=beartype)
+def sample_disk_boundary(
+    n_points: int,
+    radius: float = 1.0,
+) -> Float[np.ndarray, "{n_points} 2"]:
     """Sample equispaced points on the boundary circle.
 
     Args:
@@ -52,7 +58,11 @@ def sample_disk_boundary(n_points: int, radius: float = 1.0) -> NDArray:
     return np.column_stack([x1, x2])
 
 
-def grid_disk(resolution: int, radius: float = 1.0) -> NDArray:
+@jaxtyped(typechecker=beartype)
+def grid_disk(
+    resolution: int,
+    radius: float = 1.0,
+) -> Float[np.ndarray, "N 2"]:
     """Create a regular Cartesian grid filtered to the disk interior.
 
     The *resolution* parameter controls grid density as the number of grid

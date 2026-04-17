@@ -10,6 +10,10 @@ from mae_data_gen.io import load_dataset, save_dataset
 from mae_data_gen.mesh import grid_disk, sample_disk, sample_disk_boundary
 from mae_data_gen.problems import IdentityTransport, create_problem
 
+# ---------------------------------------------------------------------------
+# Runtime type-checking tests (jaxtyping + beartype)
+# ---------------------------------------------------------------------------
+
 
 @pytest.fixture
 def problem() -> IdentityTransport:
@@ -179,3 +183,43 @@ def test_load_without_npz_suffix(rng: np.random.Generator) -> None:
         save_dataset(path, x, {"v": x[:, 0]})
         data = load_dataset(path)
         np.testing.assert_array_equal(data["x"], x)
+
+
+# ---------------------------------------------------------------------------
+# Runtime type-checking tests (jaxtyping + beartype)
+# ---------------------------------------------------------------------------
+
+
+def test_type_check_rejects_1d_input() -> None:
+    """Passing a 1D array where 2D is expected must raise a type error at runtime."""
+    from jaxtyping import TypeCheckError
+
+    p = IdentityTransport()
+    x_1d = np.ones(5)  # shape (5,) — missing the second dimension
+
+    with pytest.raises(TypeCheckError):
+        p.rhs(x_1d)
+
+
+def test_type_check_rejects_1d_for_mesh_functions() -> None:
+    """sample_disk and sample_disk_boundary must reject non-integer n_points."""
+    from jaxtyping import TypeCheckError
+
+    # Passing a float where int is required should raise a type error
+    with pytest.raises((TypeCheckError, Exception)):
+        sample_disk(10.0)  # type: ignore[arg-type]
+
+
+def test_type_check_accepts_valid_2d_input() -> None:
+    """Valid 2D float arrays must pass type checking without errors."""
+    from jaxtyping import TypeCheckError
+
+    p = IdentityTransport()
+    x_2d = np.ones((10, 2), dtype=np.float64)
+
+    # Should not raise
+    try:
+        result = p.rhs(x_2d)
+        assert result.shape == (10,)
+    except TypeCheckError:
+        pytest.fail("TypeCheckError raised for valid 2D float input")

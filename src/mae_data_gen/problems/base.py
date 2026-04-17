@@ -2,7 +2,9 @@
 
 from abc import ABC, abstractmethod
 
-from numpy.typing import NDArray
+import numpy as np
+from beartype import beartype
+from jaxtyping import Bool, Float, jaxtyped
 
 
 class Problem(ABC):
@@ -16,7 +18,7 @@ class Problem(ABC):
     dim: int
 
     @abstractmethod
-    def domain_contains(self, x: NDArray) -> NDArray:
+    def domain_contains(self, x: Float[np.ndarray, "N dim"]) -> Bool[np.ndarray, "N"]:
         """Test whether points lie inside the domain.
 
         Args:
@@ -28,7 +30,7 @@ class Problem(ABC):
         ...
 
     @abstractmethod
-    def rhs(self, x: NDArray) -> NDArray:
+    def rhs(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
         """Right-hand side f of det(D^2 u) = f.
 
         Args:
@@ -40,7 +42,7 @@ class Problem(ABC):
         ...
 
     @abstractmethod
-    def boundary_value(self, x: NDArray) -> NDArray:
+    def boundary_value(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
         """Dirichlet boundary condition g.
 
         Args:
@@ -51,7 +53,7 @@ class Problem(ABC):
         """
         ...
 
-    def exact_solution(self, x: NDArray) -> NDArray:
+    def exact_solution(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
         """Analytical solution u(x), if available.
 
         Args:
@@ -65,7 +67,7 @@ class Problem(ABC):
         """
         raise NotImplementedError(f"{type(self).__name__} has no analytical solution.")
 
-    def exact_gradient(self, x: NDArray) -> NDArray:
+    def exact_gradient(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N dim"]:
         """Gradient of the analytical solution, if available.
 
         Args:
@@ -79,7 +81,7 @@ class Problem(ABC):
         """
         raise NotImplementedError(f"{type(self).__name__} has no analytical gradient.")
 
-    def exact_hessian(self, x: NDArray) -> NDArray:
+    def exact_hessian(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N dim dim"]:
         """Hessian of the analytical solution, if available.
 
         Args:
@@ -92,3 +94,7 @@ class Problem(ABC):
             NotImplementedError: If no analytical Hessian is known.
         """
         raise NotImplementedError(f"{type(self).__name__} has no analytical Hessian.")
+
+
+# Keep beartype and jaxtyped in namespace for subclass use
+__all__ = ["Problem", "beartype", "jaxtyped", "Bool", "Float"]
