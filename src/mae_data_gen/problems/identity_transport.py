@@ -29,7 +29,7 @@ class IdentityTransport(Problem):
         self.center = np.asarray(center, dtype=float)
 
     @jaxtyped(typechecker=beartype)
-    def domain_contains(self, x: Float[np.ndarray, "N dim"]) -> Bool[np.ndarray, "N"]:
+    def domain_contains(self, x: Float[np.ndarray, " N dim"]) -> Bool[np.ndarray, " N"]:
         """Test whether points lie inside the disk.
 
         Args:
@@ -42,7 +42,7 @@ class IdentityTransport(Problem):
         return np.sum((x - self.center) ** 2, axis=1) < self.radius**2
 
     @jaxtyped(typechecker=beartype)
-    def rhs(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
+    def rhs(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N"]:
         """Return f(x) = 1 (right-hand side of det(D^2 u) = f).
 
         Args:
@@ -55,7 +55,7 @@ class IdentityTransport(Problem):
         return np.ones(x.shape[0])
 
     @jaxtyped(typechecker=beartype)
-    def boundary_value(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
+    def boundary_value(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N"]:
         """Return g(x) = 0.5 * ||x||^2 (Dirichlet BC).
 
         Args:
@@ -68,7 +68,7 @@ class IdentityTransport(Problem):
         return 0.5 * np.sum(x**2, axis=1)
 
     @jaxtyped(typechecker=beartype)
-    def exact_solution(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
+    def exact_solution(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N"]:
         """Return u(x) = 0.5 * ||x||^2.
 
         Args:
@@ -81,7 +81,7 @@ class IdentityTransport(Problem):
         return 0.5 * np.sum(x**2, axis=1)
 
     @jaxtyped(typechecker=beartype)
-    def exact_gradient(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N dim"]:
+    def exact_gradient(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N dim"]:
         """Return grad u(x) = x.
 
         Args:
@@ -93,7 +93,7 @@ class IdentityTransport(Problem):
         return np.asarray(x, dtype=float).copy()
 
     @jaxtyped(typechecker=beartype)
-    def exact_hessian(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N dim dim"]:
+    def exact_hessian(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N dim dim"]:
         """Return D^2 u(x) = I (identity matrix at every point).
 
         Args:

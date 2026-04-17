@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\".venv/bin/python -m pyright src/ 2>&1 | tail -15 || echo \\\"pyright not in venv, trying system\\\"; which pyright && pyright src/ 2>&1 | tail -15\",\"description\":\"Check pyright validation\"}",
+  "error": "Exit code 1\n/home/jc/dev/monge-ampere-equations/src/mae-data-gen/.venv/bin/python: No module named pyright\npyright not found",
+  "timestamp": "2026-04-17T03:01:19.899Z",
+  "retry_count": 1
+}

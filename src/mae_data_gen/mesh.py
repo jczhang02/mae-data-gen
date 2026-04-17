@@ -13,7 +13,7 @@ def sample_disk(
     radius: float = 1.0,
     rng: np.random.Generator | None = None,
     seed: int | None = None,
-) -> Float[np.ndarray, "{n_points} 2"]:
+) -> Float[np.ndarray, " {n_points} 2"]:
     """Sample uniform random points inside a disk.
 
     Uses the rejection-free square-root method for uniform distribution.
@@ -42,7 +42,7 @@ def sample_disk(
 def sample_disk_boundary(
     n_points: int,
     radius: float = 1.0,
-) -> Float[np.ndarray, "{n_points} 2"]:
+) -> Float[np.ndarray, " {n_points} 2"]:
     """Sample equispaced points on the boundary circle.
 
     Args:
@@ -62,7 +62,7 @@ def sample_disk_boundary(
 def grid_disk(
     resolution: int,
     radius: float = 1.0,
-) -> Float[np.ndarray, "N 2"]:
+) -> Float[np.ndarray, " N 2"]:
     """Create a regular Cartesian grid filtered to the disk interior.
 
     The *resolution* parameter controls grid density as the number of grid

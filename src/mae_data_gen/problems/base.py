@@ -18,7 +18,7 @@ class Problem(ABC):
     dim: int
 
     @abstractmethod
-    def domain_contains(self, x: Float[np.ndarray, "N dim"]) -> Bool[np.ndarray, "N"]:
+    def domain_contains(self, x: Float[np.ndarray, " N dim"]) -> Bool[np.ndarray, " N"]:
         """Test whether points lie inside the domain.
 
         Args:
@@ -30,7 +30,7 @@ class Problem(ABC):
         ...
 
     @abstractmethod
-    def rhs(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
+    def rhs(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N"]:
         """Right-hand side f of det(D^2 u) = f.
 
         Args:
@@ -42,7 +42,7 @@ class Problem(ABC):
         ...
 
     @abstractmethod
-    def boundary_value(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
+    def boundary_value(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N"]:
         """Dirichlet boundary condition g.
 
         Args:
@@ -53,7 +53,7 @@ class Problem(ABC):
         """
         ...
 
-    def exact_solution(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N"]:
+    def exact_solution(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N"]:
         """Analytical solution u(x), if available.
 
         Args:
@@ -67,7 +67,7 @@ class Problem(ABC):
         """
         raise NotImplementedError(f"{type(self).__name__} has no analytical solution.")
 
-    def exact_gradient(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N dim"]:
+    def exact_gradient(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N dim"]:
         """Gradient of the analytical solution, if available.
 
         Args:
@@ -81,7 +81,7 @@ class Problem(ABC):
         """
         raise NotImplementedError(f"{type(self).__name__} has no analytical gradient.")
 
-    def exact_hessian(self, x: Float[np.ndarray, "N dim"]) -> Float[np.ndarray, "N dim dim"]:
+    def exact_hessian(self, x: Float[np.ndarray, " N dim"]) -> Float[np.ndarray, " N dim dim"]:
         """Hessian of the analytical solution, if available.
 
         Args:
